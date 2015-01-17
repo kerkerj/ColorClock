@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>ColorClock</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:800,400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"/>
+    <style>
+        #time { margin-top: 150px; }
+
+        #color { margin-top: 200px; }
+
+        footer {
+            font-size: 12px;
+            margin-top: 100px;
+        }
+
+        footer a:enabled {
+            color: wheat;
+            text-decoration: none;
+        }
+
+        h1, h3, footer {
+            font-family: "open sans";
+            font-weight:300;
+            text-align: center;
+            color: white;
+            transition: all 0.6s;
+            -webkit-transition: all 0.6s;
+        }
+
+        @media all and (max-width: 1024px) {
+            h1 { font-size: 80px; }
+            h3 { font-size: 20px; }
+        }
+
+        @media all and (min-width: 1024px) {
+            h1 { font-size: 110px; }
+            h3 { font-size: 30px; }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <h1 id="time"></h1>
+        <h3 id="color"></h3>
+        <footer>Idea from <a href="http://whatcolourisit.scn9a.org/">whatcolourisit</a></footer>
+    </div>
+</body>
+<script>
+    var time = document.getElementById("time");
+    var color = document.getElementById("color");
+
+    Date.prototype.getHHMMSS = function() {
+        var hours = this.getHours();
+        var mins = this.getMinutes();
+        var secs = this.getSeconds();
+
+        if (hours < 10) { hours = "0" + hours; }
+        if (mins < 10) { mins = "0" + mins; }
+        if (secs < 10) { secs = "0" + secs; }
+
+        return [hours.toString(), mins.toString(), secs.toString()];
+    };
+
+    function setTime() {
+        document.body.style.transition = "all 0.8s";
+        document.body.style.webkitTransition = "all 0.8s";
+
+        var current_time = new Date().getHHMMSS();
+        var color_code = "#" + current_time[0] + current_time[1] + current_time[2];
+
+        time.innerText = current_time[0] + ":" + current_time[1] + ":" + current_time[2];
+        color.innerHTML = color_code;
+
+        document.body.style.backgroundColor = color_code;
+
+        return;
+    }
+
+    setInterval(function() {
+        setTime();
+    }, 1000);
+
+
+</script>
+</html>
